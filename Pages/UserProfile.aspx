@@ -159,9 +159,11 @@
                                         </tr>
                                         <tr>
                                             <td class="auto-style10">
-                                                &nbsp;</td>
+                                                <asp:Label ID="gender0" runat="server" Font-Bold="True" Font-Size="Medium" Text="Status"></asp:Label>
+                                            </td>
                                             <td class="auto-style14">
-                                                &nbsp;</td>
+                                                <asp:TextBox ID="statusTextBox" runat="server" Height="30px" Width="245px" ReadOnly="True"></asp:TextBox>
+                                                </td>
                                         </tr>
                                         <tr>
                                             <td colspan="2">

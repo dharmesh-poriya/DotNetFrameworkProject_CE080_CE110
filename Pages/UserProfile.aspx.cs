@@ -60,6 +60,7 @@ namespace OnlineAuctionSystem.Pages
                         emailTextBox.Text = email;
                         userImage.ImageUrl = "~/" + rd[6].ToString();
                         genderSelectBox.SelectedValue = Convert.ToString(rd[4]);
+                        statusTextBox.Text = Convert.ToString(rd[7]);
                     }
                 }
             }
