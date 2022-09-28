@@ -61,6 +61,7 @@ namespace OnlineAuctionSystem.Pages
                         userImage.ImageUrl = "~/" + rd[6].ToString();
                         genderSelectBox.SelectedValue = Convert.ToString(rd[4]);
                         statusTextBox.Text = Convert.ToString(rd[7]);
+                        registerDateTextBox.Text = Convert.ToString(rd[8]);
                     }
                 }
             }
@@ -219,7 +220,7 @@ namespace OnlineAuctionSystem.Pages
                 HttpPostedFile postedFile = profilePhotoFileUpload.PostedFile;
                 int length = postedFile.ContentLength;
 
-                if (extension.ToLower() == "jpg" || extension.ToLower() == ".gif" || extension.ToLower() == ".png" || extension.ToLower() == ".jpeg")
+                if (extension.ToLower() == ".jpg" || extension.ToLower() == ".gif" || extension.ToLower() == ".png" || extension.ToLower() == ".jpeg")
                 {
                     if (1000000 >= length)
                     {

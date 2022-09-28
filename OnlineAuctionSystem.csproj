@@ -79,6 +79,7 @@
     <Content Include="images\default.png" />
     <Content Include="images\edit.png" />
     <Content Include="images\home.png" />
+    <Content Include="Pages\AddProduct.aspx" />
     <Content Include="Pages\AdminPage.aspx" />
     <Content Include="Pages\UserProfile.aspx" />
     <Content Include="Web.config" />
@@ -104,6 +105,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddProduct.aspx.cs">
+      <DependentUpon>AddProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AddProduct.aspx.designer.cs">
+      <DependentUpon>AddProduct.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\AdminPage.aspx.cs">
       <DependentUpon>AdminPage.aspx</DependentUpon>
@@ -132,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="files\" />
+    <Folder Include="images\product\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

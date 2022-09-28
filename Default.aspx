@@ -68,6 +68,13 @@
                 </tr>
                 <tr>
                     <td class="auto-style2">&nbsp;</td>
+                    <td class="auto-style3">
+                        <asp:Button ID="addProductButton" runat="server" Text="AddProduct" BackColor="Orange" BorderColor="Black" BorderStyle="Groove" BorderWidth="2px" Font-Bold="True" Font-Size="Medium" ForeColor="Black" Height="48px" OnClick="addProductButton_Click" Width="150px" />
+                                </td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style2">&nbsp;</td>
                     <td class="auto-style3">&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>

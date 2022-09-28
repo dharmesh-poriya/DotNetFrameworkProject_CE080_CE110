@@ -12,6 +12,19 @@ namespace OnlineAuctionSystem
     public partial class Default : System.Web.UI.Page
     {
         string cs = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
+        private string isLoggedIn()
+        {
+            HttpCookie usercookie = Request.Cookies["user"];
+            HttpCookie admincookie = Request.Cookies["Admin"];
+            if (null != usercookie || null != Session["userId"])
+            {
+                return "user";
+            }else if (null != admincookie || null != Session["adminId"])
+            {
+                return "admin";
+            }
+            return "";
+        }
         protected void setVisibilityForButton()
         {
             HttpCookie cookie = Request.Cookies["user"];
@@ -101,6 +114,22 @@ namespace OnlineAuctionSystem
         protected void profileImageBtn_Click(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("Pages/UserProfile.aspx");
+        }
+
+        protected void addProductButton_Click(object sender, EventArgs e)
+        {
+            string who = isLoggedIn();
+            if("admin" == who)
+            {
+                Response.Redirect("~/default.aspx");
+            }else if("user" == who)
+            {
+                Response.Redirect("~/Pages/AddProduct.aspx");
+            }
+            else
+            {
+                Response.Write("<script>alert('You are not logged in!!');</script>");
+            }
         }
     }
 }

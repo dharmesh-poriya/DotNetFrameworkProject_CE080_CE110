@@ -159,10 +159,18 @@
                                         </tr>
                                         <tr>
                                             <td class="auto-style10">
-                                                <asp:Label ID="gender0" runat="server" Font-Bold="True" Font-Size="Medium" Text="Status"></asp:Label>
+                                                <asp:Label ID="status" runat="server" Font-Bold="True" Font-Size="Medium" Text="Status"></asp:Label>
                                             </td>
                                             <td class="auto-style14">
                                                 <asp:TextBox ID="statusTextBox" runat="server" Height="30px" Width="245px" ReadOnly="True"></asp:TextBox>
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="auto-style10">
+                                                <asp:Label ID="joiningDate" runat="server" Font-Bold="True" Font-Size="Medium" Text="Registered Date"></asp:Label>
+                                            </td>
+                                            <td class="auto-style14">
+                                                <asp:TextBox ID="registerDateTextBox" runat="server" Height="30px" Width="245px" ReadOnly="True"></asp:TextBox>
                                                 </td>
                                         </tr>
                                         <tr>

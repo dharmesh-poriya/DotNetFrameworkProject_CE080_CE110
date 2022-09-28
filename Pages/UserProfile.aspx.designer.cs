@@ -276,13 +276,13 @@ namespace OnlineAuctionSystem.Pages
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
 
         /// <summary>
-        /// gender0 control.
+        /// status control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label gender0;
+        protected global::System.Web.UI.WebControls.Label status;
 
         /// <summary>
         /// statusTextBox control.
@@ -292,6 +292,24 @@ namespace OnlineAuctionSystem.Pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox statusTextBox;
+
+        /// <summary>
+        /// joiningDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label joiningDate;
+
+        /// <summary>
+        /// registerDateTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox registerDateTextBox;
 
         /// <summary>
         /// updateDetailButton control.
