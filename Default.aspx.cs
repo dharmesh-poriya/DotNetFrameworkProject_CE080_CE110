@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -76,7 +77,7 @@ namespace OnlineAuctionSystem
                     }
                 }
             }
-            return "~/images/default.png";
+            return "~/FileUpload/images/DefaultImages/default.png";
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -84,14 +85,32 @@ namespace OnlineAuctionSystem
             if (!IsPostBack)
             {
                 setVisibilityForButton();
+                updateActiveBiddingDetails();
             }
             else
             {
                 setVisibilityForButton();
+                updateActiveBiddingDetails();
             }
         }
 
-
+        private void updateActiveBiddingDetails()
+        {
+            SqlConnection con = new SqlConnection(cs);
+            using (con)
+            {
+                con.Open();
+                string query = "select Id,name,image,startingdate,endingdate,startingtime,endingtime from [Product] where (startingdate = @currentdate and startingtime <= @currenttime) or (endingdate = @currentdate and endingtime >= @currenttime) or (startingdate < @currentdate and endingdate > @currentdate)";
+                SqlCommand cmd = new SqlCommand(query,con);
+                cmd.Parameters.AddWithValue("@currentdate", DateTime.Now.AddDays(2));
+                cmd.Parameters.AddWithValue("@currenttime", DateTime.Now.TimeOfDay);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                sda.Fill(ds);
+                ActiveBiddingGridView.DataSource = ds;
+                ActiveBiddingGridView.DataBind();
+            }
+        }
         protected void loginBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("authentication/Login.aspx");
@@ -129,6 +148,18 @@ namespace OnlineAuctionSystem
             else
             {
                 Response.Write("<script>alert('You are not logged in!!');</script>");
+            }
+        }
+
+        protected void ActiveBidding_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+            if (e.CommandName == "viewDetail")
+            {
+                Response.Write(e.CommandArgument);
+                Server.Transfer("~/Pages/Product.aspx");
+                //Response.Redirect("~/Pages/Product.aspx");
+                //updateActiveBiddingDetails(Convert.ToInt32(e.CommandArgument));
             }
         }
     }

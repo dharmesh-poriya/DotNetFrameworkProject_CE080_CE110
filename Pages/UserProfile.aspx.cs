@@ -184,7 +184,7 @@ namespace OnlineAuctionSystem.Pages
             using (con)
             {
                 con.Open();
-                string fileName = chackFileValidation();
+                //string fileName = chackFileValidation();
                 SqlCommand cmd = new SqlCommand(query, con);
                 string imgName = chackFileValidation();
                 if ("" != imgName)
@@ -196,9 +196,9 @@ namespace OnlineAuctionSystem.Pages
                     {
                         profilePhotoFileUpload.Enabled = false;
                         //Response.Write("<script>alert('Profile pic updated successfully!!');</script>");
-                        /*messageLabel.Text = "Updated!!";
+                        messageLabel.Text = "Updated!!";
                         messageLabel.ForeColor = System.Drawing.Color.Green;
-                        messageLabel.Visible = true;*/
+                        messageLabel.Visible = true;
                         Response.Redirect("UserProfile.aspx");
                     }
                     else
@@ -211,7 +211,7 @@ namespace OnlineAuctionSystem.Pages
 
         private string chackFileValidation()
         {
-            string path = Server.MapPath("../files/");
+            string path = Server.MapPath("~/FileUpload/images/UserProfilePic/");
 
             if (profilePhotoFileUpload.HasFile)
             {
@@ -226,7 +226,7 @@ namespace OnlineAuctionSystem.Pages
                     {
                         profilePhotoFileUpload.SaveAs(path + fileName);
                         //System.IO.Directory.CreateDirectory
-                        string name = "files/" + fileName;
+                        string name = "FileUpload/images/UserProfilePic/" + fileName;
                         return name;
                     }
                     else

@@ -34,7 +34,7 @@ namespace OnlineAuctionSystem.autentication
                     int age = Convert.ToInt32(ageTextBox.Text);
                     string email = emailTextBox.Text;
                     string gender = genderSelectBox.SelectedValue;
-                    string profilepic = "images/default.png";
+                    string profilepic = "FileUpload/images/DefaultImages/default.png";
                     DateTime currentDate = DateTime.Now;
                     string password = passwordTextBox.Text;
                     int loginId = doEnterDataInLoginTbl(email, password);
@@ -113,7 +113,7 @@ namespace OnlineAuctionSystem.autentication
 
         private string chackFileValidation()
         {
-            string path = Server.MapPath("../files/");
+            string path = Server.MapPath("~/FileUpload/UserDocument/");
  
             if (documentFileUpload.HasFile)
             {
@@ -128,7 +128,7 @@ namespace OnlineAuctionSystem.autentication
                     {
                         documentFileUpload.SaveAs(path + fileName);
                         //System.IO.Directory.CreateDirectory
-                        string name = "files/" + fileName;
+                        string name = "FileUpload/UserDocument/" + fileName;
                         return name;
                     }
                     else

@@ -74,13 +74,12 @@
     <Content Include="authentication\Login.aspx" />
     <Content Include="authentication\SignUp.aspx" />
     <Content Include="Default.aspx" />
-    <Content Include="images\bg1.jpeg" />
-    <Content Include="images\cross.png" />
-    <Content Include="images\default.png" />
-    <Content Include="images\edit.png" />
-    <Content Include="images\home.png" />
+    <Content Include="FileUpload\images\DefaultImages\default.png" />
+    <Content Include="FileUpload\images\DefaultImages\edit.png" />
+    <Content Include="FileUpload\images\DefaultImages\home.png" />
     <Content Include="Pages\AddProduct.aspx" />
     <Content Include="Pages\AdminPage.aspx" />
+    <Content Include="Pages\Product.aspx" />
     <Content Include="Pages\UserProfile.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -120,6 +119,13 @@
     <Compile Include="Pages\AdminPage.aspx.designer.cs">
       <DependentUpon>AdminPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Product.aspx.cs">
+      <DependentUpon>Product.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Product.aspx.designer.cs">
+      <DependentUpon>Product.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\UserProfile.aspx.cs">
       <DependentUpon>UserProfile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -139,8 +145,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="files\" />
-    <Folder Include="images\product\" />
+    <Folder Include="FileUpload\images\ProductImages\" />
+    <Folder Include="FileUpload\images\UserProfilePic\" />
+    <Folder Include="FileUpload\UserDocument\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -85,6 +85,7 @@
                                             <td class="auto-style14">
                                                 <asp:FileUpload ID="productImageFileUpload" runat="server" BackColor="White" ForeColor="Blue" />
                                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="productImageFileUpload" ErrorMessage="RequiredFieldValidator" Font-Bold="True" ForeColor="Red" Display="Dynamic" SetFocusOnError="True">Please select file</asp:RequiredFieldValidator>
+                                                <br />
                                                 <asp:Label ID="messageLabel" runat="server" Text="Label" Visible="False"></asp:Label>
                                             </td>
                                         </tr>
