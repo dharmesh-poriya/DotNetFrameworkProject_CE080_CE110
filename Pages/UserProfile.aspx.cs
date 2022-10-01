@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -17,19 +19,12 @@ namespace OnlineAuctionSystem.Pages
         {
             if (!IsPostBack)
             {
-                HttpCookie cookie = Request.Cookies["user"];
-                if (null != cookie || null != Session["userId"])
+                int userid = getUserId();
+                if (0 < userid)
                 {
-                    if (null != cookie)
-                    {
-                        int userid = Convert.ToInt32(cookie["userId"]);
-                        userDetails(userid);
-                    }
-                    else
-                    {
-                        int userid = Convert.ToInt32(Session["userId"]);
-                        userDetails(userid);
-                    }
+                    userDetails(userid);
+                    getCurrentActiveBiddingData(userid);
+                    getPastBiddingData(userid);
                 }
                 else
                 {
@@ -37,6 +32,7 @@ namespace OnlineAuctionSystem.Pages
                 }
             }
         }
+
 
         private void userDetails(int userid)
         {
@@ -119,11 +115,11 @@ namespace OnlineAuctionSystem.Pages
         {
             int userid = 0;
             HttpCookie cookie = Request.Cookies["user"];
-            if(null != cookie)
+            if (null != cookie)
             {
                 userid = Convert.ToInt32(cookie["userId"]);
             }
-            else if(null != Session["userId"])
+            else if (null != Session["userId"])
             {
                 userid = Convert.ToInt32(Session["userId"]);
             }
@@ -137,9 +133,9 @@ namespace OnlineAuctionSystem.Pages
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@fname",firstnameTextBox.Text);
+                cmd.Parameters.AddWithValue("@fname", firstnameTextBox.Text);
                 cmd.Parameters.AddWithValue("@lname", lastnameTextBox.Text);
-                cmd.Parameters.AddWithValue("@age",ageTextBox.Text);
+                cmd.Parameters.AddWithValue("@age", ageTextBox.Text);
                 cmd.Parameters.AddWithValue("@gender", genderSelectBox.SelectedValue);
                 cmd.Parameters.AddWithValue("@userid", userid);
                 int a = cmd.ExecuteNonQuery();
@@ -190,7 +186,7 @@ namespace OnlineAuctionSystem.Pages
                 if ("" != imgName)
                 {
                     cmd.Parameters.AddWithValue("@img", imgName);
-                    cmd.Parameters.AddWithValue("@userid",userid);
+                    cmd.Parameters.AddWithValue("@userid", userid);
                     int a = cmd.ExecuteNonQuery();
                     if (0 < a)
                     {
@@ -249,5 +245,157 @@ namespace OnlineAuctionSystem.Pages
             }
             return "";
         }
+
+        private int getUserId()
+        {
+            HttpCookie cookie = Request.Cookies["user"];
+            if (null != cookie || null != Session["userId"])
+            {
+                if (null != cookie)
+                {
+                    int userid = Convert.ToInt32(cookie["userId"]);
+                    return userid;
+                }
+                else
+                {
+                    int userid = Convert.ToInt32(Session["userId"]);
+                    return userid;
+                }
+            }
+            return -1;
+        }
+
+        private void getCurrentActiveBiddingData(int userid)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Image");
+            dt.Columns.Add("ProductName");
+            dt.Columns.Add("basePrice");
+            dt.Columns.Add("bidValue");
+            dt.Columns.Add("Date");
+            dt.Columns.Add("Time");
+
+            SqlConnection con = new SqlConnection(cs);
+            using (con)
+            {
+                con.Open();
+                string query1 = "select * from [BidTable] where userid=@userid";
+                string query2 = "select * from [Product] " +
+                    "where " +
+                    "Id=@productid " +
+                    "and " +
+                    "(" +
+                    "(startingdate < @currentdate and endingdate > @currentdate) " +
+                    "or " +
+                    "(" +
+                    "(startingdate = @currentdate and startingtime <= @currenttime) " +
+                    "and " +
+                    "((endingdate>@currentdate) or (endingdate = @currentdate and endingtime > @currenttime))" +
+                    ") " +
+                    "or " +
+                    "(" +
+                    "(startingdate < @currentdate) " +
+                    "and " +
+                    "(endingdate = @currentdate and endingtime > @currenttime)" +
+                    ")" +
+                    ")";
+                SqlCommand cmd = new SqlCommand(query1, con);
+                cmd.Parameters.AddWithValue("@userid", userid);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        List<string> details = new List<string>();
+                        bool isActive = getProductDetails(details, Convert.ToInt32(dr["productid"]),query2);
+                        if (isActive)
+                        {
+                            details.Add(Convert.ToString(dr[2]));
+                            details.Add(Convert.ToString(dr[3]));
+                            details.Add(Convert.ToString(dr[4]));
+                            string[] dte = details[4].Split(' ');
+                            dt.Rows.Add(details[0], details[1], details[2], details[3], dte[0], DateTime.Parse(details[5]).TimeOfDay);
+                        }
+                    }
+                }
+            }
+            this.CurrentActiveBidGridView.DataSource = dt;
+            this.CurrentActiveBidGridView.DataBind();
+        }
+
+        private bool getProductDetails(List<string> details, int productid,string query)
+        {
+            SqlConnection con = new SqlConnection(cs);
+            using (con)
+            {
+                con.Open();
+                
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@productid", productid);
+                cmd.Parameters.AddWithValue("@currentdate", DateTime.Now.Date);
+                cmd.Parameters.AddWithValue("@currenttime", DateTime.Now.TimeOfDay);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        details.Add(Convert.ToString(dr[1]));
+                        details.Add(Convert.ToString(dr[2]));
+                        details.Add(Convert.ToString(dr[4]));
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void getPastBiddingData(int userid)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Image");
+            dt.Columns.Add("ProductName");
+            dt.Columns.Add("basePrice");
+            dt.Columns.Add("bidValue");
+            dt.Columns.Add("Date");
+            dt.Columns.Add("Time");
+
+            SqlConnection con = new SqlConnection(cs);
+            using (con)
+            {
+                con.Open();
+                string query1 = "select * from [BidTable] where userid=@userid";
+                string query2 = "select * from [Product] " +
+                    "where " +
+                    "Id=@productid " +
+                    "and " +
+                    "(" +
+                    "(endingdate < @currentdate) " +
+                    "or " +
+                    "(endingdate = @currentdate and endingtime <= @currenttime) " +
+                    ")";
+                SqlCommand cmd = new SqlCommand(query1, con);
+                cmd.Parameters.AddWithValue("@userid", userid);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        List<string> details = new List<string>();
+                        bool isActive = getProductDetails(details, Convert.ToInt32(dr["productid"]),query2);
+                        if (isActive)
+                        {
+                            details.Add(Convert.ToString(dr[2]));
+                            details.Add(Convert.ToString(dr[3]));
+                            details.Add(Convert.ToString(dr[4]));
+                            string[] dte = details[4].Split(' ');
+                            dt.Rows.Add(details[0], details[1], details[2], details[3], dte[0], DateTime.Parse(details[5]).TimeOfDay);
+                        }
+                    }
+                }
+            }
+            this.PastBiddingGridView.DataSource = dt;
+            this.PastBiddingGridView.DataBind();
+        }
+
     }
 }

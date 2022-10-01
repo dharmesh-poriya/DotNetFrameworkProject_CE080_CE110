@@ -59,16 +59,17 @@ namespace OnlineAuctionSystem.Pages
             {
                 string description = productDescriptionTextBox.Text;
                 int baseprice = Convert.ToInt32(basePriceTextBox.Text);
-
+                string productname = productNameTextBox.Text;
                 SqlConnection con = new SqlConnection(cs);
                 using (con)
                 {
                     con.Open();
-                    string query = "insert into Product values(@image,@desc,@baseprice,@startdate,@enddate,@starttime,@endtime,@status,@userid)";
+                    string query = "insert into Product values(@image,@name,@desc,@baseprice,@startdate,@enddate,@starttime,@endtime,@status,@userid)";
                     int userid = getUserId();
 
                     SqlCommand cmd = new SqlCommand(query, con);
                     cmd.Parameters.AddWithValue("@image", fileName);
+                    cmd.Parameters.AddWithValue("@name", productname);
                     cmd.Parameters.AddWithValue("@desc", description);
                     cmd.Parameters.AddWithValue("@baseprice", baseprice);
                     cmd.Parameters.AddWithValue("@startdate",startdate);
@@ -94,6 +95,7 @@ namespace OnlineAuctionSystem.Pages
 
         private void clearFields()
         {
+            productNameTextBox.Text = "";
             productDescriptionTextBox.Text = "";
             basePriceTextBox.Text = "";
             startDate.Value = endDate.Value = startTime.Value = endTime.Value = "";
@@ -153,7 +155,7 @@ namespace OnlineAuctionSystem.Pages
                     {
                         productImageFileUpload.SaveAs(path + fileName);
                         //System.IO.Directory.CreateDirectory
-                        string name = "FileUpload/images/ProductImages/" + fileName;
+                        string name = "~/FileUpload/images/ProductImages/" + fileName;
                         return name;
                     }
                     else

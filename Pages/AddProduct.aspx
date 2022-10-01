@@ -54,7 +54,7 @@
                         <table cellpadding="3" cellspacing="3" class="auto-style1">
                             <tr>
                                 <td class="auto-style15">
-                                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="auto-style17" Height="50px" ImageHeight="50px" ImageUrl="~/images/home.png" ImageWidth="70px" NavigateUrl="~/Default.aspx" Width="70px">HyperLink</asp:HyperLink>
+                                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="auto-style17" Height="50px" ImageHeight="50px" ImageUrl="~/FileUpload/images/DefaultImages/home.png" ImageWidth="70px" NavigateUrl="~/Default.aspx" Width="70px">HyperLink</asp:HyperLink>
                                 </td>
                                 <td class="auto-style16">&nbsp;</td>
                                 <td>
@@ -87,6 +87,15 @@
                                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="productImageFileUpload" ErrorMessage="RequiredFieldValidator" Font-Bold="True" ForeColor="Red" Display="Dynamic" SetFocusOnError="True">Please select file</asp:RequiredFieldValidator>
                                                 <br />
                                                 <asp:Label ID="messageLabel" runat="server" Text="Label" Visible="False"></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="auto-style10">
+                                                <asp:Label ID="lastnameLabel0" runat="server" Font-Bold="True" Font-Size="Medium" Text="Product Name"></asp:Label>
+                                            </td>
+                                            <td class="auto-style14">
+                                                <asp:TextBox ID="productNameTextBox" runat="server" Height="30px" Width="245px"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="productNameTextBox" Font-Bold="True" ForeColor="Red" SetFocusOnError="True" Display="Dynamic">Please enter product name</asp:RequiredFieldValidator>
                                             </td>
                                         </tr>
                                         <tr>

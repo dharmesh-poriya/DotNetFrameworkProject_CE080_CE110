@@ -82,15 +82,26 @@ namespace OnlineAuctionSystem
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            setVisibilityForButton();
+            updateActiveBiddingDetails();
+            updateFutureBiddingDetails();
+        }
+
+        private void updateFutureBiddingDetails()
+        {
+            SqlConnection con = new SqlConnection(cs);
+            using (con)
             {
-                setVisibilityForButton();
-                updateActiveBiddingDetails();
-            }
-            else
-            {
-                setVisibilityForButton();
-                updateActiveBiddingDetails();
+                con.Open();
+                string query = "select Id,name,image,startingdate,endingdate,startingtime,endingtime from [Product] where (startingdate = @currentdate and startingtime > @currenttime) or (startingdate > @currentdate) order by startingdate,startingtime,endingdate,endingtime asc";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@currentdate", DateTime.Now.Date);
+                cmd.Parameters.AddWithValue("@currenttime", DateTime.Now.TimeOfDay);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                sda.Fill(ds);
+                FutureBiddingGridView.DataSource = ds;
+                FutureBiddingGridView.DataBind();
             }
         }
 
@@ -100,9 +111,9 @@ namespace OnlineAuctionSystem
             using (con)
             {
                 con.Open();
-                string query = "select Id,name,image,startingdate,endingdate,startingtime,endingtime from [Product] where (startingdate = @currentdate and startingtime <= @currenttime) or (endingdate = @currentdate and endingtime >= @currenttime) or (startingdate < @currentdate and endingdate > @currentdate)";
+                string query = "select Id,name,image,startingdate,endingdate,startingtime,endingtime from [Product] where (startingdate = @currentdate and startingtime <= @currenttime) or (endingdate = @currentdate and endingtime >= @currenttime) or (startingdate < @currentdate and endingdate > @currentdate) order by startingdate,startingtime,endingdate,endingtime asc";
                 SqlCommand cmd = new SqlCommand(query,con);
-                cmd.Parameters.AddWithValue("@currentdate", DateTime.Now.AddDays(2));
+                cmd.Parameters.AddWithValue("@currentdate", DateTime.Now.Date);
                 cmd.Parameters.AddWithValue("@currenttime", DateTime.Now.TimeOfDay);
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -150,17 +161,31 @@ namespace OnlineAuctionSystem
                 Response.Write("<script>alert('You are not logged in!!');</script>");
             }
         }
-
+/*
         protected void ActiveBidding_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
             if (e.CommandName == "viewDetail")
             {
                 Response.Write(e.CommandArgument);
-                Server.Transfer("~/Pages/Product.aspx");
                 //Response.Redirect("~/Pages/Product.aspx");
                 //updateActiveBiddingDetails(Convert.ToInt32(e.CommandArgument));
             }
         }
+*/
+/*
+        protected void FutureBidding_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+            if (e.CommandName == "viewDetail")
+            {
+                Response.Write(e.CommandArgument);
+                //Response.Redirect("~/Pages/Product.aspx");
+                //updateFutureBiddingDetails(Convert.ToInt32(e.CommandArgument));
+            }
+        }
+*/
+
+
     }
 }
