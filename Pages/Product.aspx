@@ -60,7 +60,7 @@
                 <td class="auto-style2">&nbsp;</td>
                 <td>
                     <center>
-                        <asp:Label ID="productOwnerLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Orange" Text="Your Product" Visible="False"></asp:Label></center>
+                        <asp:Label ID="productOwnerLabel" runat="server" Font-Bold="True" Font-Size="XX-Large" ForeColor="Purple" Text="Your Product" Visible="False"></asp:Label></center>
                 </td>
                 <td>&nbsp;</td>
             </tr>
@@ -120,7 +120,8 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Owner">
                                 <ItemTemplate>
-                                    <asp:Button ID="viewOwnerDetailsButton" runat="server" Text="Owner" CommandName="viewOwnerDetails" CommandArgument='<%# Bind("userid") %>' />
+                                    <asp:HyperLink ID="HyperLink1" runat="server" Text="Owner" NavigateUrl='<%# Bind("userid","~/Pages/ShowUserProfile.aspx?id={0}") %>'></asp:HyperLink>
+                                    <%--<asp:Button ID="viewOwnerDetailsButton" runat="server" Text="Owner" CommandName="viewOwnerDetails" CommandArgument='<%# Bind("userid") %>' />--%>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -141,18 +142,6 @@
                 <td colspan="3">
                     <hr />
                 </td>
-            </tr>
-            <tr>
-                <td class="auto-style2">&nbsp;</td>
-                <td>
-                    <asp:Label ID="Label12" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="#009900" Text="Current Biddings" Font-Overline="False"></asp:Label>
-                </td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="auto-style2">&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
             </tr>
             <tr>
                 <td class="auto-style2">&nbsp;</td>
@@ -184,6 +173,11 @@
                                 </center>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                    <asp:Label ID="Label12" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="#009900" Text="Current Biddings" Font-Overline="False"></asp:Label>
+                            </td>
+                        </tr>
                     </table>
                 </td>
                 <td>&nbsp;</td>
@@ -196,7 +190,8 @@
                         <Columns>
                             <asp:TemplateField HeaderText="Bidder Name">
                                 <ItemTemplate>
-                                    <asp:Label ID="bidderName" runat="server" Text='<%# Bind("firstname") %>'></asp:Label>
+                                    <asp:HyperLink ID="userLinkHyperLink" runat="server" Font-Bold="True" Font-Size="Medium" ForeColor="Blue" Visible="True" NavigateUrl='<%# Bind("userid","~/Pages/ShowUserProfile.aspx?Id={0}") %>' Text='<%# Bind("firstname") %>'></asp:HyperLink>
+                                    
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Amount">

@@ -168,7 +168,7 @@
                                                         <td class="auto-style18">
                                                             &nbsp;</td>
                                                         <td>
-                                                            <asp:Button ID="viewYourBids" runat="server" BackColor="#555555" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" Height="40px" Text="View Bidding Data" Width="321px" ForeColor="White" CssClass="auto-style17" OnClick="viewYourBids_Click" />
+                                                            <asp:Button ID="viewBids" runat="server" BackColor="#555555" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" Height="40px" Text="View Bidding Data" Width="321px" ForeColor="White" CssClass="auto-style17" OnClick="viewBids_Click" />
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -184,13 +184,70 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <hr />
-                    </td>
+                        &nbsp;</td>
                 </tr>
                 <tr>
                     <td class="auto-style2">&nbsp;</td>
                     <td class="auto-style3">
-                        <asp:Label ID="currentActiveLabel" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="#009900" Text="Current Active Biddings" Font-Overline="False"></asp:Label>
+                        <asp:Label ID="productLabel" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="#009900" Text="Products" Font-Overline="False" Visible="False"></asp:Label>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style2">&nbsp;</td>
+                    <td class="auto-style3">
+                        
+                        <asp:GridView ID="ProductsGridView" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" Visible="False">
+                            <Columns>
+                                <asp:TemplateField HeaderText="Image">
+                                    <ItemTemplate>
+                                        <asp:Image ID="productImage" ImageUrl='<%# Eval("Image") %>' runat="server" Width="100" Height="100" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Product Name">
+                                    <ItemTemplate>
+                                        <asp:HyperLink ID="productNameHyperLink" runat="server" NavigateUrl='<%# string.Concat("~/Pages/Product.aspx?id=","",Eval("Id")) %>' ForeColor="DarkBlue" Text='<%# Bind("name") %>'>HyperLink</asp:HyperLink>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Base Price">
+                                    <ItemTemplate>
+                                        <asp:Label ID="biddingValue" runat="server" Text='<%# Bind("basePrice") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="starting date">
+                                    <ItemTemplate>
+                                        <asp:Label ID="startingdate" runat="server" Text='<%# Bind("startingdate","{0:d}") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ending date">
+                                    <ItemTemplate>
+                                        <asp:Label ID="endingdate" runat="server" Text='<%# Bind("endingdate","{0:d}") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
+                            <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
+                            <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
+                            <RowStyle BackColor="White" ForeColor="#003399" />
+                            <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+                            <SortedAscendingCellStyle BackColor="#EDF6F6" />
+                            <SortedAscendingHeaderStyle BackColor="#0D4AC4" />
+                            <SortedDescendingCellStyle BackColor="#D6DFDF" />
+                            <SortedDescendingHeaderStyle BackColor="#002876" />
+                        </asp:GridView>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style2">&nbsp;</td>
+                    <td class="auto-style3">
+                        &nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style2">&nbsp;</td>
+                    <td class="auto-style3">
+                        <asp:Label ID="currentActiveLabel" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="Purple" Text="Current Active Biddings" Font-Overline="False" Visible="False"></asp:Label>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
@@ -207,7 +264,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Product Name">
                                     <ItemTemplate>
-                                        <asp:Label ID="productName" runat="server" Text='<%# Bind("ProductName") %>'></asp:Label>
+                                        <asp:HyperLink ID="productNameHyperLink" runat="server" NavigateUrl='<%# Bind("Id","~/Pages/Product.aspx?id={0}") %>' ForeColor="DarkBlue" Text='<%# Bind("ProductName") %>'></asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Base Price">
@@ -245,13 +302,12 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <hr />
-                    </td>
+                        &nbsp;</td>
                 </tr>
                 <tr>
                     <td class="auto-style2">&nbsp;</td>
                     <td class="auto-style3">
-                        <asp:Label ID="pastBiddingLabel" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="#009900" Text="Past Biddings" Font-Overline="False"></asp:Label>
+                        <asp:Label ID="pastBiddingLabel" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="DarkRed" Text="Past Biddings" Font-Overline="False" Visible="False"></asp:Label>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
@@ -268,7 +324,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Product Name">
                                     <ItemTemplate>
-                                        <asp:Label ID="productName0" runat="server" Text='<%# Bind("ProductName") %>'></asp:Label>
+                                        <asp:HyperLink ID="productNameHyperLink" runat="server" NavigateUrl='<%# Bind("Id","~/Pages/Product.aspx?id={0}") %>' ForeColor="DarkBlue" Text='<%# Bind("ProductName") %>'></asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Base Price">

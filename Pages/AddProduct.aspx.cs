@@ -57,7 +57,7 @@ namespace OnlineAuctionSystem.Pages
             }
             else if("" != fileName)
             {
-                string description = productDescriptionTextBox.Text;
+                string description = descriptionTextarea.Value;
                 int baseprice = Convert.ToInt32(basePriceTextBox.Text);
                 string productname = productNameTextBox.Text;
                 SqlConnection con = new SqlConnection(cs);
@@ -96,7 +96,7 @@ namespace OnlineAuctionSystem.Pages
         private void clearFields()
         {
             productNameTextBox.Text = "";
-            productDescriptionTextBox.Text = "";
+            descriptionTextarea.Value = "";
             basePriceTextBox.Text = "";
             startDate.Value = endDate.Value = startTime.Value = endTime.Value = "";
         }

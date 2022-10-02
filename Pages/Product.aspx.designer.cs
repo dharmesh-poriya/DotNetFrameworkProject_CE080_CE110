@@ -60,15 +60,6 @@ namespace OnlineAuctionSystem.Pages
         protected global::System.Web.UI.WebControls.GridView ProductBiddingGridView;
 
         /// <summary>
-        /// Label12 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
-
-        /// <summary>
         /// ChangeBidLabel control.
         /// </summary>
         /// <remarks>
@@ -130,6 +121,15 @@ namespace OnlineAuctionSystem.Pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink winnerLinkHyperLink;
+
+        /// <summary>
+        /// Label12 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label12;
 
         /// <summary>
         /// BiddingGridView control.

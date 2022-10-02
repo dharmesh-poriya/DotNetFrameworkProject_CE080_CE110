@@ -330,6 +330,24 @@ namespace OnlineAuctionSystem.Pages
         protected global::System.Web.UI.WebControls.Button viewYourBids;
 
         /// <summary>
+        /// yourProductLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label yourProductLabel;
+
+        /// <summary>
+        /// YourProductsGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView YourProductsGridView;
+
+        /// <summary>
         /// currentActiveLabel control.
         /// </summary>
         /// <remarks>

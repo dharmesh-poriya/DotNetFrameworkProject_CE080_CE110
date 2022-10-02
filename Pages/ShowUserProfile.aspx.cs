@@ -24,12 +24,11 @@ namespace OnlineAuctionSystem.Pages
             }
 
             int userid = Convert.ToInt32(Request.QueryString["Id"]);
-            if (!IsPostBack)
-            {
-                userDetails(userid);
-                getCurrentActiveBiddingData(userid);
-                getPastBiddingData(userid);
-            }
+
+            userDetails(userid);
+            getUserProductDetails(userid);
+            getCurrentActiveBiddingData(userid);
+            getPastBiddingData(userid);
         }
 
 
@@ -106,6 +105,7 @@ namespace OnlineAuctionSystem.Pages
         private void getCurrentActiveBiddingData(int userid)
         {
             DataTable dt = new DataTable();
+            dt.Columns.Add("Id");
             dt.Columns.Add("Image");
             dt.Columns.Add("ProductName");
             dt.Columns.Add("basePrice");
@@ -151,8 +151,9 @@ namespace OnlineAuctionSystem.Pages
                             details.Add(Convert.ToString(dr[2]));
                             details.Add(Convert.ToString(dr[3]));
                             details.Add(Convert.ToString(dr[4]));
-                            string[] dte = details[4].Split(' ');
-                            dt.Rows.Add(details[0], details[1], details[2], details[3], dte[0], DateTime.Parse(details[5]).TimeOfDay);
+                            string[] dte = details[5].Split(' ');
+                            dt.Rows.Add(details[0], details[1], details[2], details[3], details[4], dte[0], DateTime.Parse(details[6]).TimeOfDay);
+
                         }
                     }
                 }
@@ -177,6 +178,7 @@ namespace OnlineAuctionSystem.Pages
                 {
                     while (dr.Read())
                     {
+                        details.Add(Convert.ToString(dr[0]));
                         details.Add(Convert.ToString(dr[1]));
                         details.Add(Convert.ToString(dr[2]));
                         details.Add(Convert.ToString(dr[4]));
@@ -190,6 +192,7 @@ namespace OnlineAuctionSystem.Pages
         private void getPastBiddingData(int userid)
         {
             DataTable dt = new DataTable();
+            dt.Columns.Add("Id");
             dt.Columns.Add("Image");
             dt.Columns.Add("ProductName");
             dt.Columns.Add("basePrice");
@@ -225,8 +228,8 @@ namespace OnlineAuctionSystem.Pages
                             details.Add(Convert.ToString(dr[2]));
                             details.Add(Convert.ToString(dr[3]));
                             details.Add(Convert.ToString(dr[4]));
-                            string[] dte = details[4].Split(' ');
-                            dt.Rows.Add(details[0], details[1], details[2], details[3], dte[0], DateTime.Parse(details[5]).TimeOfDay);
+                            string[] dte = details[5].Split(' ');
+                            dt.Rows.Add(details[0], details[1], details[2], details[3], details[4], dte[0], DateTime.Parse(details[6]).TimeOfDay);
                         }
                     }
                 }
@@ -235,12 +238,31 @@ namespace OnlineAuctionSystem.Pages
             this.PastBiddingGridView.DataBind();
         }
 
-        protected void viewYourBids_Click(object sender, EventArgs e)
+
+        protected void viewBids_Click(object sender, EventArgs e)
         {
+            ProductsGridView.Visible = !ProductsGridView.Visible;
+            productLabel.Visible = !productLabel.Visible;
             currentActiveLabel.Visible = !currentActiveLabel.Visible;
             CurrentActiveBidGridView.Visible = !CurrentActiveBidGridView.Visible;
             pastBiddingLabel.Visible = !pastBiddingLabel.Visible;
             PastBiddingGridView.Visible = !PastBiddingGridView.Visible;
+        }
+
+        private void getUserProductDetails(int userid)
+        {
+            SqlConnection con = new SqlConnection(cs);
+            using (con)
+            {
+                string query = "select Id,image,name,baseprice,startingdate,endingdate from [Product] where userid=@userid";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@userid", userid);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                sda.Fill(ds);
+                ProductsGridView.DataSource = ds;
+                ProductsGridView.DataBind();
+            }
         }
     }
 }

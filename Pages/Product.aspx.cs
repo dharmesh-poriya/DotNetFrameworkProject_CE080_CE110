@@ -23,19 +23,20 @@ namespace OnlineAuctionSystem.Pages
                 return;
             }
             int productid = Convert.ToInt32(Request.QueryString[0]);
-            if (!IsPostBack)
+            /*if (!IsPostBack)
             {
-                fetchProductDetails(productid);
-                fetchBiddingDetails(productid);
-                int userid = getUserId();
-                if (isThisProductOfUser(userid, productid))
-                {
-                    productOwnerLabel.Visible = true;
-                    ChangeBidLabel.Visible = false;
-                    changeBidTextBox.Visible = false;
-                    updateBidValueButton.Visible = false;
-                    editBidValueImageButton.Visible = false;
-                }
+                
+            }*/
+            fetchProductDetails(productid);
+            fetchBiddingDetails(productid);
+            int userid = getUserId();
+            if (isThisProductOfUser(userid, productid))
+            {
+                productOwnerLabel.Visible = true;
+                ChangeBidLabel.Visible = false;
+                changeBidTextBox.Visible = false;
+                updateBidValueButton.Visible = false;
+                editBidValueImageButton.Visible = false;
             }
             bool bidactive = isBidActive(productid);
             if (false == bidactive)
@@ -252,7 +253,7 @@ namespace OnlineAuctionSystem.Pages
             SqlConnection con = new SqlConnection(cs);
             using (con)
             {
-                string query = "select BT.bidvalue,BT.biddate,BT.bidtime,U.firstname from BidTable BT INNER JOIN [User] U ON BT.userid=U.Id where BT.productid=@productid ORDER BY bidvalue DESC";
+                string query = "select BT.userid,BT.bidvalue,BT.biddate,BT.bidtime,U.firstname from BidTable BT INNER JOIN [User] U ON BT.userid=U.Id where BT.productid=@productid ORDER BY bidvalue DESC";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@productid", productid);
 

@@ -1,48 +1,60 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AddProduct.aspx.cs" Inherits="OnlineAuctionSystem.Pages.AddProduct" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
     <style type="text/css">
-
         .auto-style1 {
             width: 100%;
         }
+
         .auto-style2 {
             width: 80px;
         }
+
         .auto-style3 {
             width: 1088px;
         }
+
         .auto-style4 {
             width: 87px;
         }
+
         .auto-style6 {
             width: 719px;
         }
+
         .auto-style11 {
             width: 105%;
             margin-left: 0px;
         }
+
         .auto-style10 {
             width: 181px;
         }
+
         .auto-style14 {
             width: 427px;
         }
+
         .auto-style15 {
             width: 138px;
         }
+
         .auto-style16 {
             width: 116px;
         }
+
         .auto-style17 {
             margin-left: 31px;
         }
-        </style>
-        
+
+        textarea {
+            resize: vertical;
+        }
+    </style>
+
 </head>
 <body>
     <form id="form2" runat="server">
@@ -103,8 +115,8 @@
                                                 <asp:Label ID="lastnameLabel" runat="server" Font-Bold="True" Font-Size="Medium" Text="Description"></asp:Label>
                                             </td>
                                             <td class="auto-style14">
-                                                <asp:TextBox ID="productDescriptionTextBox" runat="server" Height="30px" Width="245px"></asp:TextBox>
-                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="productDescriptionTextBox" Font-Bold="True" ForeColor="Red" SetFocusOnError="True" Display="Dynamic">Please enter description</asp:RequiredFieldValidator>
+                                                <textarea runat="server" id="descriptionTextarea" value="" rows="5" cols="31" name="descriptionTextarea"></textarea>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="descriptionTextarea" ErrorMessage="Please enter a base price" Font-Bold="True" ForeColor="Red" SetFocusOnError="True" Display="Dynamic">Please enter a Description</asp:RequiredFieldValidator>
                                             </td>
                                         </tr>
                                         <tr>
@@ -122,8 +134,8 @@
                                                 <asp:Label ID="startdateLbl" runat="server" Font-Bold="True" Font-Size="Medium" Text="Starting Date-Time"></asp:Label>
                                             </td>
                                             <td class="auto-style14">
-                                                <input type="date" runat="server" id="startDate" value="" name="startDateName" required="required" autofocus="autofocus"/>
-                                                <input type="time" runat="server" id="startTime" value="" name="startTimeName" required="required" autofocus="autofocus"/>
+                                                <input type="date" runat="server" id="startDate" value="" name="startDateName" required="required" autofocus="autofocus" />
+                                                <input type="time" runat="server" id="startTime" value="" name="startTimeName" required="required" autofocus="autofocus" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -131,8 +143,8 @@
                                                 <asp:Label ID="gender" runat="server" Font-Bold="True" Font-Size="Medium" Text="Ending Date-Time"></asp:Label>
                                             </td>
                                             <td class="auto-style14">
-                                                <input type="date" runat="server" id="endDate" value="" name="endDateName" required="required" autofocus="autofocus"/>
-                                                <input type="time" runat="server" id="endTime" value="" name="endTimeName" required="required" autofocus="autofocus"/>
+                                                <input type="date" runat="server" id="endDate" value="" name="endDateName" required="required" autofocus="autofocus" />
+                                                <input type="time" runat="server" id="endTime" value="" name="endTimeName" required="required" autofocus="autofocus" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -140,7 +152,7 @@
                                                 <asp:Button ID="addProductButton" runat="server" BackColor="#4CAF50" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" Height="40px" Text="Add Product" Width="455px" OnClick="addProductButton_Click" />
                                             </td>
                                         </tr>
-                                        </table>
+                                    </table>
                                 </td>
                                 <td>&nbsp;</td>
                             </tr>
@@ -156,10 +168,10 @@
             </table>
         </div>
     </form>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
-        
+
         /*var toCheck = Date.now();
         var msToCheck = toCheck.getTime();
         var msNow = Date.now();*/
@@ -167,7 +179,7 @@
             var startDate = document.getElementById("startDate").value;
             /*console.log(startDate);*/
             let currentDate = new Date().toJSON().slice(0, 10);
-            
+
             if ((Date.parse(currentDate) >= Date.parse(startDate))) {
                 alert("start date must be greater than Current date");
                 document.getElementById("startDate").value = "";
