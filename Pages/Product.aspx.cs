@@ -15,6 +15,13 @@ namespace OnlineAuctionSystem.Pages
         string cs = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (null == Request.QueryString["id"] || false == isProductExist(Convert.ToInt32(Request.QueryString[0])))
+            {
+                string fun = "alert";
+                string mess = "alert('ERROR-404 : PAGE NOT FOUND');window.location ='../Default.aspx';";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), fun, mess, true);
+                return;
+            }
             int productid = Convert.ToInt32(Request.QueryString[0]);
             if (!IsPostBack)
             {
@@ -25,10 +32,15 @@ namespace OnlineAuctionSystem.Pages
                 {
                     productOwnerLabel.Visible = true;
                     ChangeBidLabel.Visible = false;
-                    changeBidTextBox.Visible = false;   
+                    changeBidTextBox.Visible = false;
                     updateBidValueButton.Visible = false;
                     editBidValueImageButton.Visible = false;
                 }
+            }
+            bool bidactive = isBidActive(productid);
+            if (false == bidactive)
+            {
+                declareWinner(productid);
             }
 
         }
@@ -38,7 +50,8 @@ namespace OnlineAuctionSystem.Pages
 
             if (e.CommandName == "viewOwnerDetails")
             {
-                Response.Write(e.CommandArgument);
+                //Response.Write(e.CommandArgument);
+                Response.Redirect("~/Pages/ShowUserProfile.aspx?Id=" + e.CommandArgument);
                 //updateActiveBiddingDetails(Convert.ToInt32(e.CommandArgument));
             }
         }
@@ -60,7 +73,7 @@ namespace OnlineAuctionSystem.Pages
                         updateBidValueButton.Enabled = true;
                         errorMessageBidValueLabel.Visible = false;
                         //Response.Write("now we can bid!!");
-                        
+
                     }
                     else
                     {
@@ -92,15 +105,15 @@ namespace OnlineAuctionSystem.Pages
             int productid = Convert.ToInt32(Request.QueryString[0]);
             long mx_bid = getMaxBidValue(productid);
             long enteredBid = Convert.ToInt64(changeBidTextBox.Text);
-            if(enteredBid > mx_bid)
+            if (enteredBid > mx_bid)
             {
                 int userid = getUserId();
-                if(0 < userid)
+                if (0 < userid)
                 {
-                    int bidId = getBidId(userid,productid);
-                    if(0 < bidId)
+                    int bidId = getBidId(userid, productid);
+                    if (0 < bidId)
                     {
-                        if (updateBidValue(bidId,enteredBid))
+                        if (updateBidValue(bidId, enteredBid))
                         {
                             fetchBiddingDetails(productid);
                             Response.Write("<script>alert('Your Bid updated successfully');</script>");
@@ -112,7 +125,7 @@ namespace OnlineAuctionSystem.Pages
                     }
                     else
                     {
-                        if(insertNewBid(userid, productid, enteredBid))
+                        if (insertNewBid(userid, productid, enteredBid))
                         {
                             fetchBiddingDetails(productid);
                             Response.Write("<script>alert('Your Bid updated successfully');</script>");
@@ -142,6 +155,71 @@ namespace OnlineAuctionSystem.Pages
 
 
         //my functions
+
+        private bool isProductExist(int v)
+        {
+            SqlConnection con = new SqlConnection(cs);
+            using (con)
+            {
+                con.Open();
+                string query = "select * from [Product] where Id=@productid";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@productid", v);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void declareWinner(int productid)
+        {
+            SqlConnection con = new SqlConnection(cs);
+            using (con)
+            {
+                con.Open();
+                string query = "select userid,MAX(bidvalue) As mxbidvalue from[BidTable] where productid = @productid GROUP BY userid";
+                SqlCommand cmd = new SqlCommand(@query, con);
+                cmd.Parameters.AddWithValue("@productid", productid);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    if (dr.Read())
+                    {
+                        changeBidTextBox.Enabled = false;
+                        updateBidValueButton.Enabled = false;
+                        editBidValueImageButton.Enabled = false;
+                        winnerLabel.Visible = true;
+                        winnerLinkHyperLink.Visible = true;
+                        getWinnerDetails(Convert.ToInt32(dr[0]));
+                    }
+                }
+            }
+        }
+
+        private void getWinnerDetails(int userid)
+        {
+            SqlConnection con = new SqlConnection(cs);
+            using (con)
+            {
+                con.Open();
+                string query = "select * from [User] where Id=@userid";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@userid", userid);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    if (dr.Read())
+                    {
+                        winnerLinkHyperLink.Text = dr[1].ToString();
+                        winnerLinkHyperLink.NavigateUrl = "~/Pages/ShowUserProfile.aspx?Id=" + Convert.ToString(dr[0]);
+                    }
+                }
+            }
+        }
+
         private void fetchProductDetails(int productid)
         {
             SqlConnection con = new SqlConnection(cs);
@@ -365,17 +443,17 @@ namespace OnlineAuctionSystem.Pages
                 string time = Convert.ToString(DateTime.Now.TimeOfDay.Hours);
                 time += ":" + Convert.ToString(DateTime.Now.TimeOfDay.Minutes);
                 time += ":" + Convert.ToString(DateTime.Now.TimeOfDay.Seconds);
-                
+
                 string query = "insert into BidTable values(@userid,@bidvalue,@biddate,@bidtime,@productid)";
-                SqlCommand cmd = new SqlCommand (query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@userid", userid);
-                cmd.Parameters.AddWithValue("@bidvalue",enteredBid);
-                cmd.Parameters.AddWithValue("@biddate",DateTime.Now.Date);
+                cmd.Parameters.AddWithValue("@bidvalue", enteredBid);
+                cmd.Parameters.AddWithValue("@biddate", DateTime.Now.Date);
                 cmd.Parameters.AddWithValue("@bidtime", DateTime.Parse(time).TimeOfDay);
-                cmd.Parameters.AddWithValue("@productid",productid);
+                cmd.Parameters.AddWithValue("@productid", productid);
 
                 int a = cmd.ExecuteNonQuery();
-                if(0 < a)
+                if (0 < a)
                 {
                     return true;
                 }
@@ -383,7 +461,7 @@ namespace OnlineAuctionSystem.Pages
             return false;
         }
 
-        private bool updateBidValue(int bidId,long enteredbid)
+        private bool updateBidValue(int bidId, long enteredbid)
         {
             SqlConnection con = new SqlConnection(cs);
             using (con)

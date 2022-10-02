@@ -191,7 +191,7 @@
                                                             <asp:Button ID="updateDetailButton" runat="server" BackColor="#E7E7E7" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" ForeColor="Black" Height="40px" Text="Update Details" Width="211px" OnClick="updateButton0_Click" />
                                                         </td>
                                                         <td>
-                                                            <asp:Button ID="viewYourBids" runat="server" BackColor="#555555" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" Height="40px" Text="View Your data" Width="197px" ForeColor="White" CssClass="auto-style17" />
+                                                            <asp:Button ID="viewYourBids" runat="server" BackColor="#555555" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" Height="40px" Text="View Your Bids" Width="197px" ForeColor="White" CssClass="auto-style17" OnClick="viewYourBids_Click" />
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -213,14 +213,14 @@
                 <tr>
                     <td class="auto-style2">&nbsp;</td>
                     <td class="auto-style3">
-                        <asp:Label ID="Label12" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="#009900" Text="Current Active Biddings" Font-Overline="False"></asp:Label>
+                        <asp:Label ID="currentActiveLabel" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="#009900" Text="Current Active Biddings" Font-Overline="False" Visible="False"></asp:Label>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
                     <td class="auto-style2">&nbsp;</td>
                     <td class="auto-style3">
-                        <asp:GridView ID="CurrentActiveBidGridView" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" GridLines="Vertical" ForeColor="Black">
+                        <asp:GridView ID="CurrentActiveBidGridView" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" GridLines="Vertical" ForeColor="Black" Visible="False">
                             <AlternatingRowStyle BackColor="#CCCCCC" />
                             <Columns>
                                 <asp:TemplateField HeaderText="Image">
@@ -274,14 +274,14 @@
                 <tr>
                     <td class="auto-style2">&nbsp;</td>
                     <td class="auto-style3">
-                        <asp:Label ID="Label13" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="#009900" Text="Past Biddings" Font-Overline="False"></asp:Label>
+                        <asp:Label ID="pastBiddingLabel" runat="server" Font-Bold="True" Font-Size="X-Large" Font-Underline="False" ForeColor="#009900" Text="Past Biddings" Font-Overline="False" Visible="False"></asp:Label>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
                     <td class="auto-style2">&nbsp;</td>
                     <td class="auto-style3">
-                        <asp:GridView ID="PastBiddingGridView" runat="server" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical" AutoGenerateColumns="False">
+                        <asp:GridView ID="PastBiddingGridView" runat="server" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical" AutoGenerateColumns="False" Visible="False">
                             <AlternatingRowStyle BackColor="#F7F7F7" />
                             <Columns>
                                 <asp:TemplateField HeaderText="Image">

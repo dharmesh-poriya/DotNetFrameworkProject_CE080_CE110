@@ -114,6 +114,24 @@ namespace OnlineAuctionSystem.Pages
         protected global::System.Web.UI.WebControls.Button updateBidValueButton;
 
         /// <summary>
+        /// winnerLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label winnerLabel;
+
+        /// <summary>
+        /// winnerLinkHyperLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink winnerLinkHyperLink;
+
+        /// <summary>
         /// BiddingGridView control.
         /// </summary>
         /// <remarks>

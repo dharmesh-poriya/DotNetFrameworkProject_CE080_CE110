@@ -85,6 +85,25 @@ namespace OnlineAuctionSystem
             setVisibilityForButton();
             updateActiveBiddingDetails();
             updateFutureBiddingDetails();
+            updatePastBiddingDetails();
+        }
+
+        private void updatePastBiddingDetails()
+        {
+            SqlConnection con = new SqlConnection(cs);
+            using (con)
+            {
+                con.Open();
+                string query = "select Id,name,image,startingdate,endingdate,startingtime,endingtime from [Product] where ((endingdate < @currentdate) or (endingdate = @currentdate and endingtime <= @currenttime)) order by startingdate,startingtime,endingdate,endingtime asc";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@currentdate", DateTime.Now.Date);
+                cmd.Parameters.AddWithValue("@currenttime", DateTime.Now.TimeOfDay);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                sda.Fill(ds);
+                PastBiddingGridView.DataSource = ds;
+                PastBiddingGridView.DataBind();
+            }
         }
 
         private void updateFutureBiddingDetails()

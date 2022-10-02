@@ -59,7 +59,8 @@
             <tr>
                 <td class="auto-style2">&nbsp;</td>
                 <td>
-                    <center><asp:Label ID="productOwnerLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Orange" Text="Your Product" Visible="False"></asp:Label></center>
+                    <center>
+                        <asp:Label ID="productOwnerLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Orange" Text="Your Product" Visible="False"></asp:Label></center>
                 </td>
                 <td>&nbsp;</td>
             </tr>
@@ -173,6 +174,14 @@
                             <td class="auto-style5">&nbsp;</td>
                             <td>
                                 <asp:Button ID="updateBidValueButton" runat="server" BackColor="LightBlue" Font-Bold="True" Font-Size="Medium" Height="35px" Text="Update" Width="150px" OnClick="updateBidValueButton_Click" Enabled="False" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <center>
+                                    <asp:Label ID="winnerLabel" runat="server" BackColor="#FFFF99" Font-Bold="True" Font-Size="XX-Large" Text="Winner :- " Visible="False"></asp:Label>
+                                    <asp:HyperLink ID="winnerLinkHyperLink" runat="server" Font-Bold="True" Font-Size="XX-Large" ForeColor="Blue" Visible="False">UserName</asp:HyperLink>
+                                </center>
                             </td>
                         </tr>
                     </table>

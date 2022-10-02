@@ -330,13 +330,13 @@ namespace OnlineAuctionSystem.Pages
         protected global::System.Web.UI.WebControls.Button viewYourBids;
 
         /// <summary>
-        /// Label12 control.
+        /// currentActiveLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
+        protected global::System.Web.UI.WebControls.Label currentActiveLabel;
 
         /// <summary>
         /// CurrentActiveBidGridView control.
@@ -348,13 +348,13 @@ namespace OnlineAuctionSystem.Pages
         protected global::System.Web.UI.WebControls.GridView CurrentActiveBidGridView;
 
         /// <summary>
-        /// Label13 control.
+        /// pastBiddingLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label13;
+        protected global::System.Web.UI.WebControls.Label pastBiddingLabel;
 
         /// <summary>
         /// PastBiddingGridView control.

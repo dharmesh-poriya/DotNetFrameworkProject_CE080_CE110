@@ -397,5 +397,12 @@ namespace OnlineAuctionSystem.Pages
             this.PastBiddingGridView.DataBind();
         }
 
+        protected void viewYourBids_Click(object sender, EventArgs e)
+        {
+            currentActiveLabel.Visible = !currentActiveLabel.Visible;
+            CurrentActiveBidGridView.Visible = !CurrentActiveBidGridView.Visible;
+            pastBiddingLabel.Visible = !pastBiddingLabel.Visible;
+            PastBiddingGridView.Visible = !PastBiddingGridView.Visible;
+        }
     }
 }

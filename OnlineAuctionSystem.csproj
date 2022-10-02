@@ -80,6 +80,7 @@
     <Content Include="Pages\AddProduct.aspx" />
     <Content Include="Pages\AdminPage.aspx" />
     <Content Include="Pages\Product.aspx" />
+    <Content Include="Pages\ShowUserProfile.aspx" />
     <Content Include="Pages\UserProfile.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -125,6 +126,13 @@
     </Compile>
     <Compile Include="Pages\Product.aspx.designer.cs">
       <DependentUpon>Product.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ShowUserProfile.aspx.cs">
+      <DependentUpon>ShowUserProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ShowUserProfile.aspx.designer.cs">
+      <DependentUpon>ShowUserProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\UserProfile.aspx.cs">
       <DependentUpon>UserProfile.aspx</DependentUpon>
