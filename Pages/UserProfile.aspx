@@ -104,7 +104,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <asp:Button ID="updateButton" runat="server" BackColor="#008CBA" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" ForeColor="White" Height="40px" Text="Update" Width="248px" OnClick="updateButton_Click" />
+                                                <asp:Button ID="updateButton" runat="server" BackColor="#008CBA" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" ForeColor="White" Height="40px" Text="Update" Width="248px" OnClick="updateButton_Click" Enabled="False" />
                                             </td>
                                         </tr>
                                     </table>
@@ -191,7 +191,7 @@
                                                 <table cellpadding="2" class="auto-style1">
                                                     <tr>
                                                         <td class="auto-style18">
-                                                            <asp:Button ID="updateDetailButton" runat="server" BackColor="#E7E7E7" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" ForeColor="Black" Height="40px" Text="Update Details" Width="211px" OnClick="updateButton0_Click" />
+                                                            <asp:Button ID="updateDetailButton" runat="server" BackColor="#E7E7E7" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" ForeColor="Black" Height="40px" Text="Update Details" Width="211px" OnClick="updateDetailsButton_Click" />
                                                         </td>
                                                         <td>
                                                             <asp:Button ID="viewYourBids" runat="server" BackColor="#555555" BorderColor="Silver" BorderStyle="Groove" Font-Bold="True" Font-Size="Medium" Height="40px" Text="View Your Bids" Width="197px" ForeColor="White" CssClass="auto-style17" OnClick="viewYourBids_Click" />

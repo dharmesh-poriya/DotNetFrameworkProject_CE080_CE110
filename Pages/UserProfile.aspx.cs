@@ -17,8 +17,6 @@ namespace OnlineAuctionSystem.Pages
         string cs = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack)
-            //{
             int userid = getUserId();
             if (0 < userid)
             {
@@ -31,9 +29,27 @@ namespace OnlineAuctionSystem.Pages
             {
                 Response.Redirect("../authentication/Login.aspx");
             }
-            //}
         }
 
+
+        private int getUserId()
+        {
+            HttpCookie cookie = Request.Cookies["user"];
+            if (null != cookie || null != Session["userId"])
+            {
+                if (null != cookie)
+                {
+                    int userid = Convert.ToInt32(cookie["userId"]);
+                    return userid;
+                }
+                else
+                {
+                    int userid = Convert.ToInt32(Session["userId"]);
+                    return userid;
+                }
+            }
+            return -1;
+        }
 
         private void userDetails(int userid)
         {
@@ -107,24 +123,15 @@ namespace OnlineAuctionSystem.Pages
             genderSelectBox.Enabled = true;
         }
 
-        protected void updateButton0_Click(object sender, EventArgs e)
+        protected void updateDetailsButton_Click(object sender, EventArgs e)
         {
             updateDetails();
         }
 
         private void updateDetails()
         {
-            int userid = 0;
-            HttpCookie cookie = Request.Cookies["user"];
-            if (null != cookie)
-            {
-                userid = Convert.ToInt32(cookie["userId"]);
-            }
-            else if (null != Session["userId"])
-            {
-                userid = Convert.ToInt32(Session["userId"]);
-            }
-            else
+            int userid = getUserId();
+            if(0 > userid)
             {
                 Response.Redirect("../authentication/Login.aspx");
             }
@@ -146,7 +153,11 @@ namespace OnlineAuctionSystem.Pages
                     lastnameTextBox.ReadOnly = true;
                     ageTextBox.ReadOnly = true;
                     genderSelectBox.Enabled = false;
-                    Response.Write("<script>alert('Details updated successfully!!');</script>");
+                    string fun = "alert";
+                    string mess = "alert('Details updated successfully!!');window.location ='./UserProfile.aspx';";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), fun, mess, true);
+                    return;
+                    //Response.Write("<script>alert('Details updated successfully!!');</script>");
                 }
                 else
                 {
@@ -157,25 +168,19 @@ namespace OnlineAuctionSystem.Pages
 
         protected void editProfilePicImageButton_Click(object sender, ImageClickEventArgs e)
         {
-            profilePhotoFileUpload.Enabled = true;
+            updateButton.Enabled = !updateButton.Enabled;
+            profilePhotoFileUpload.Enabled = !profilePhotoFileUpload.Enabled;
         }
 
         protected void updateButton_Click(object sender, EventArgs e)
         {
-            int userid = 0;
-            HttpCookie cookie = Request.Cookies["user"];
-            if (null != cookie)
-            {
-                userid = Convert.ToInt32(cookie["userId"]);
-            }
-            else if (null != Session["userId"])
-            {
-                userid = Convert.ToInt32(Session["userId"]);
-            }
-            else
+            int userid = getUserId();
+            
+            if(0 > userid)
             {
                 Response.Redirect("../authentication/Login.aspx");
             }
+            
             SqlConnection con = new SqlConnection(cs);
             string query = "update [User] set image=@img where Id=@userid";
             using (con)
@@ -245,25 +250,6 @@ namespace OnlineAuctionSystem.Pages
                 }
             }
             return "";
-        }
-
-        private int getUserId()
-        {
-            HttpCookie cookie = Request.Cookies["user"];
-            if (null != cookie || null != Session["userId"])
-            {
-                if (null != cookie)
-                {
-                    int userid = Convert.ToInt32(cookie["userId"]);
-                    return userid;
-                }
-                else
-                {
-                    int userid = Convert.ToInt32(Session["userId"]);
-                    return userid;
-                }
-            }
-            return -1;
         }
 
         private void getCurrentActiveBiddingData(int userid)

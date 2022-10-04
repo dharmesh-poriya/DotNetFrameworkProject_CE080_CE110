@@ -72,7 +72,7 @@
             <tr>
                 <td class="auto-style2">&nbsp;</td>
                 <td>
-                    <asp:GridView ID="ProductBiddingGridView" runat="server" OnRowCommand="buttonClick_RowCommand" AutoGenerateColumns="False"
+                    <asp:GridView ID="ProductBiddingGridView" runat="server" AutoGenerateColumns="False"
                         CellPadding="3" DataKeyNames="id" CssClass="auto-style3" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
                         <Columns>
                             <asp:TemplateField HeaderText="Image">

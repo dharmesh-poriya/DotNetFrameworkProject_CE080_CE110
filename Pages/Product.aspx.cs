@@ -23,10 +23,7 @@ namespace OnlineAuctionSystem.Pages
                 return;
             }
             int productid = Convert.ToInt32(Request.QueryString[0]);
-            /*if (!IsPostBack)
-            {
-                
-            }*/
+            
             fetchProductDetails(productid);
             fetchBiddingDetails(productid);
             int userid = getUserId();
@@ -46,16 +43,6 @@ namespace OnlineAuctionSystem.Pages
 
         }
 
-        protected void buttonClick_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-
-            if (e.CommandName == "viewOwnerDetails")
-            {
-                //Response.Write(e.CommandArgument);
-                Response.Redirect("~/Pages/ShowUserProfile.aspx?Id=" + e.CommandArgument);
-                //updateActiveBiddingDetails(Convert.ToInt32(e.CommandArgument));
-            }
-        }
 
         protected void editBidValueImageButton_Click(object sender, ImageClickEventArgs e)
         {
@@ -70,9 +57,9 @@ namespace OnlineAuctionSystem.Pages
                 {
                     if (getStatus(userid))
                     {
-                        changeBidTextBox.Enabled = true;
-                        updateBidValueButton.Enabled = true;
-                        errorMessageBidValueLabel.Visible = false;
+                        changeBidTextBox.Enabled = !changeBidTextBox.Enabled;
+                        updateBidValueButton.Enabled = !updateBidValueButton.Enabled;
+                        errorMessageBidValueLabel.Visible = !errorMessageBidValueLabel.Visible;
                         //Response.Write("now we can bid!!");
 
                     }
