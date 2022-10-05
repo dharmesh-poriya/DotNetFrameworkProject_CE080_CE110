@@ -17,17 +17,20 @@ namespace OnlineAuctionSystem.Pages
         string cs = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            int userid = getUserId();
-            if (0 < userid)
+            if (!IsPostBack)
             {
-                userDetails(userid);
-                getMyProduct(userid);
-                getCurrentActiveBiddingData(userid);
-                getPastBiddingData(userid);
-            }
-            else
-            {
-                Response.Redirect("../authentication/Login.aspx");
+                int userid = getUserId();
+                if (0 < userid)
+                {
+                    userDetails(userid);
+                    getMyProduct(userid);
+                    getCurrentActiveBiddingData(userid);
+                    getPastBiddingData(userid);
+                }
+                else
+                {
+                    Response.Redirect("../authentication/Login.aspx");
+                }
             }
         }
 
@@ -74,7 +77,8 @@ namespace OnlineAuctionSystem.Pages
                         userImage.ImageUrl = "~/" + rd[6].ToString();
                         genderSelectBox.SelectedValue = Convert.ToString(rd[4]);
                         statusTextBox.Text = Convert.ToString(rd[7]);
-                        registerDateTextBox.Text = Convert.ToString(rd[8]);
+                        string[] dte = Convert.ToString(rd[8]).Split(' ');
+                        registerDateTextBox.Text = dte[0];
                     }
                 }
             }
@@ -131,7 +135,7 @@ namespace OnlineAuctionSystem.Pages
         private void updateDetails()
         {
             int userid = getUserId();
-            if(0 > userid)
+            if (0 > userid)
             {
                 Response.Redirect("../authentication/Login.aspx");
             }
@@ -175,12 +179,12 @@ namespace OnlineAuctionSystem.Pages
         protected void updateButton_Click(object sender, EventArgs e)
         {
             int userid = getUserId();
-            
-            if(0 > userid)
+
+            if (0 > userid)
             {
                 Response.Redirect("../authentication/Login.aspx");
             }
-            
+
             SqlConnection con = new SqlConnection(cs);
             string query = "update [User] set image=@img where Id=@userid";
             using (con)
