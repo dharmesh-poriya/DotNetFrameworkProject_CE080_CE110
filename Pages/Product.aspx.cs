@@ -176,14 +176,21 @@ namespace OnlineAuctionSystem.Pages
                 {
                     if (dr.Read())
                     {
-                        changeBidTextBox.Enabled = false;
-                        updateBidValueButton.Enabled = false;
-                        editBidValueImageButton.Enabled = false;
-                        winnerLabel.Visible = true;
-                        winnerLinkHyperLink.Visible = true;
+                        //Response.Write(dr[1]);
                         getWinnerDetails(Convert.ToInt32(dr[0]));
                     }
                 }
+                else
+                {
+                    winnerLinkHyperLink.Text = "Not Sold";
+                    winnerLinkHyperLink.NavigateUrl = "#";
+                }
+                ChangeBidLabel.Visible = false;
+                changeBidTextBox.Visible = false;
+                updateBidValueButton.Visible = false;
+                editBidValueImageButton.Visible = false;
+                winnerLabel.Visible = true;
+                winnerLinkHyperLink.Visible = true;
             }
         }
 
